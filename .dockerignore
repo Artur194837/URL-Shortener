@@ -1,0 +1,1 @@
+node_modules //Node modules werden nicht in das Docker Image kopiert, weil sie dort via npm install installiert werden

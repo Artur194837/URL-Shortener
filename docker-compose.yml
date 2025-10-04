@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  app:
+    # Docker soll das Image aus der lokalen Dockerfile im aktuellen Verzeichnis bauen
+    build: . 
+    
+    # Der Container soll auf Port 3000 lauschen
+    ports:
+      - "3000:3000"
+      
+    # Skript, das im Container gestartet werden soll (nodemon)
+    command: npm run dev
+    
+    # Volume-Mapping (Herzstück der Entwicklung)
+    volumes:
+      # 1. Mappe den gesamten Projekt-Code in den Container
+      - .:/app
+      
+      # 2. ÜBERSCHREIBE den gemappten node_modules-Ordner mit einem leeren Docker-Volume
+      #    Dies verhindert, dass die inkompatiblen Windows-node_modules in den Container gelangen.
+      #    Der Container kann nun seine eigenen Linux-kompatiblen node_modules verwenden.
+      - /app/node_modules
+
+      - ./data:/app/data
